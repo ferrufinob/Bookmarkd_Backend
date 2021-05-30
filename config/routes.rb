@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  resources :pins
-  resources :boards
-  resources :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:create] #signup
+      # post login sessions controller
+      resources :boards, only: [:index, :show]
+      resources :pins, only: [:index, :show, :create, :edit]
+    end
+  end
 end
