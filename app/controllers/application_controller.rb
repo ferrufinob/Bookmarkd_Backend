@@ -30,4 +30,14 @@ class ApplicationController < ActionController::API
       user = User.find_by(id: user_id)
     end
   end
+
+  #  check if user is logged in thorugh a
+  def logged_id?
+    !!session_user
+  end
+
+  # if user is not logged in, send log in message
+  def authorized
+    render json: { message: "Please log in" }, status: :unauthorized unless logged_id?
+  end
 end
