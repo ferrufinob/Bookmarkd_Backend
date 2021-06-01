@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
     user = User.create(user_params)
     if user.valid?
       token = encode_token({ user_id: user.id })
-      render json: { user: UserSerializer.new(user), jwt: token }
+      render json: { user: UserSerializer.new(user), jwt: token }, status: :accepted
     else
       render json: { error: "failed to create user" }
     end
@@ -14,7 +14,6 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    # require is for nested resources
     params.permit(:username, :email, :password)
   end
 end
