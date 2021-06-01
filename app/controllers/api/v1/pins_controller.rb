@@ -1,5 +1,6 @@
 class Api::V1::PinsController < ApplicationController
   before_action :set_pin, only: [:show]
+  skip_before_action :authorized, only: [:index, :show]
 
   def index
     pins = Pin.all

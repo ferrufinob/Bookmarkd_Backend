@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  before_action :authorized
 
   # !! REMEMBER: delete all noted before assessment
 
@@ -8,14 +9,15 @@ class ApplicationController < ActionController::API
   end
 
   # helper function to check a request of there is an authorization header
-  def auth_header_token
-    request.headers["Authorization"].split(" ")[1]
+  def auth_header
+    request.headers["Authorization"]
   end
 
   def decoded_token
-    if auth_header_token
+    if auth_header
+      token = auth_header.split(" "[1])
       begin
-        JWT.decode(auth_header_token, "secret", true, algorithm: "HS256")
+        JWT.decode(token, "secret", true, algorithm: "HS256")
       rescue JWT::DecodeError
         nil
       end
@@ -24,10 +26,9 @@ class ApplicationController < ActionController::API
 
   #   to find current user if their token passes its authentication
   def session_user
-    decoded_hash = decoded_token
-    if !decoded_hash.empty?
-      user_id = decoded_hash[0]["user_id"]
-      user = User.find_by(id: user_id)
+    if decoded_token
+      user_id = decoded_token[0]["user_id"]
+      @user = User.find_by(id: user_id)
     end
   end
 
