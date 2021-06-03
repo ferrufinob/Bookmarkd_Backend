@@ -12,7 +12,6 @@ class Api::V1::SessionsController < ApplicationController
     end
   end
 
-  #   find a user and log them in automatically
   def autologin
     if session_user
       render json: { user: UserSerializer.new(session_user) }, status: :accepted
