@@ -1,5 +1,5 @@
 class Api::V1::SessionsController < ApplicationController
-  skip_before_action :authorized, only: [:login, :autologin]
+  # skip_before_action :authorized, only: [:login, :autologin]
 
   def login
     user = User.find_by(email: params[:email])
@@ -13,10 +13,7 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def autologin
-    if session_user
-      render json: { user: UserSerializer.new(session_user) }, status: :accepted
-    else
-      render json: { error: "No User Logged in" }
-    end
+    token = encode_token({ user_id: session_user.id })
+    render json: { user: UserSerializer.new(session_user), jwt: token }, status: :accepted
   end
 end

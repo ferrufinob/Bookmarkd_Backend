@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authorized
-
+  # before_action :authorized
 
   # TODO: generate a stronger secret password
   def encode_token(payload)
@@ -23,10 +22,8 @@ class ApplicationController < ActionController::API
   end
 
   def session_user
-    if decoded_token
-      user_id = decoded_token[0]["user_id"]
-      @user = User.find_by(id: user_id)
-    end
+    user_id = decoded_token[0]["user_id"]
+    @user = User.find_by(id: user_id)
   end
 
   def logged_id?
