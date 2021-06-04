@@ -8,7 +8,6 @@ class Api::V1::PinsController < ApplicationController
   end
 
   def show
-    byebug
     if @pin
       render json: { pin: PinSerializer.new(@pin) }
     else
