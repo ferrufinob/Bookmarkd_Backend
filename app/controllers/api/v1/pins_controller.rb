@@ -16,10 +16,9 @@ class Api::V1::PinsController < ApplicationController
   end
 
   def create
-    board = Board.find_or_create_by(name: params[:name], user_id: session_user)
-    pin = board.pins.build(pin_params)
-    pin.user = session_user
-    if pin.valid?
+    board = Board.find_by(id: params[:board_id])
+    pin = session_user.pins.build(pin_params)
+    if pin.save
       render json: { pin: PinSerializer.new(pin), board: BoardSerializer.new(board) }, status: :created
     else
       render json: { error: "Failed to create pin." }, status: :not_acceptable
@@ -33,6 +32,6 @@ class Api::V1::PinsController < ApplicationController
   end
 
   def pin_params
-    params.permit(:title, :description, :image, :site_url, :board_id, board_attributes: [:name])
+    params.require(:pin).permit(:title, :description, :image, :site_url, :board_id)
   end
 end
