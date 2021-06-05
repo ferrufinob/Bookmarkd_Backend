@@ -16,7 +16,6 @@ class Api::V1::PinsController < ApplicationController
   end
 
   def create
-    # pry
     if params[:board] != ""
       board = Board.find_or_create_by(name: params[:board], user_id: session_user.id)
       if board.valid?
