@@ -9,5 +9,3 @@
 User.create(username: "Brenda", email: "brenda@email.com", password: "password")
 
 Board.create(name: "Cats", user_id: 1)
-
-Pin.create(title: "Tabby Cat", description: "Tabby Cat Facts", image: "https://www.aspcapetinsurance.com/media/2207/tabby-cat-facts.jpg", site_url: "https://www.aspcapetinsurance.com/resources/tabby-cat-facts/", user_id: 1, board_id: 1)
