@@ -18,16 +18,17 @@ class Api::V1::PinsController < ApplicationController
   def create
     if params[:board] != ""
       board = Board.find_or_create_by(name: params[:board], user_id: session_user.id)
-      if board.valid?
-        pin = session_user.pins.build(pin_params)
+      if params[:title] != "" && params[:description] != "" && params[:site_url] != "" && params[:image] != ""
+        pin = Pin.create(pin_params)
         pin.board_id = board.id
-      end
-      if pin.save
+        pin.user = session_user
         render json: { pin: PinSerializer.new(pin), board: BoardSerializer.new(board) }, status: :created
       else
-        render json: { error: "Failed to create pin." }, status: :not_acceptable
+        render json: { error: "All Fields Required." }, status: 422
       end
-    else render json: { error: "Failed to create board" }, status: :not_acceptable     end
+    else
+      render json: { error: "Choose or create a board." }, status: 422
+    end
   end
 
   private
