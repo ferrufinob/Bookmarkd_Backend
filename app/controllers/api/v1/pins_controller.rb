@@ -3,7 +3,7 @@ class Api::V1::PinsController < ApplicationController
   # skip_before_action :authorized, only: [:index, :show]
 
   def index
-    pins = Pin.all
+    pins = Pin.with_attached_image
     render json: pins
   end
 
