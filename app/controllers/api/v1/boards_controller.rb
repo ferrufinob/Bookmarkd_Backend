@@ -5,7 +5,7 @@ class Api::V1::BoardsController < ApplicationController
   end
 
   def create
-    board = Board.find_or_create_by(name: params[:name], user_id: session_user.id)
+    board = Board.create(name: params[:name], user_id: session_user.id)
     if board.valid?
       render json: { board: BoardSerializer.new(board) }, status: :created
     else
