@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       post "/login", to: "sessions#login"
       get "/autologin", to: "sessions#autologin"
       resources :boards, only: [:index, :create]
-      resources :pins, only: [:index, :show, :create]
+      resources :pins, only: [:index, :show, :create, :destroy]
     end
   end
 end

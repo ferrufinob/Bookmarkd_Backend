@@ -1,5 +1,5 @@
 class Api::V1::PinsController < ApplicationController
-  before_action :set_pin, only: [:show]
+  before_action :set_pin, only: [:show, :destroy]
   # skip_before_action :authorized, only: [:index, :show]
 
   def index
@@ -23,6 +23,14 @@ class Api::V1::PinsController < ApplicationController
       render json: { pin: PinSerializer.new(pin), board: BoardSerializer.new(board) }, status: :created
     else
       render json: { error: "Failed to create pin." }, status: :not_acceptable
+    end
+  end
+
+  def destroy
+    if @pin.destroy
+      render json: { message: "successfully deleted" }
+    else
+      render json: { error: "there seems to be an issue deleting your pin" }
     end
   end
 
