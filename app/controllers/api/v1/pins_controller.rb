@@ -17,6 +17,7 @@ class Api::V1::PinsController < ApplicationController
 
   def create
     board = Board.find_by(id: params[:board_id])
+
     pin = session_user.pins.build(pin_params)
     pin.board_id = board.id
     if pin.save
