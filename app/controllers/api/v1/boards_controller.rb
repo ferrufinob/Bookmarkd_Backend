@@ -1,4 +1,6 @@
 class Api::V1::BoardsController < ApplicationController
+  before_action :set_board, only: [:destroy]
+
   def index
     boards = session_user.boards
     render json: boards
@@ -13,5 +15,17 @@ class Api::V1::BoardsController < ApplicationController
     end
   end
 
+  def destroy
+    if @board.destroy
+      render json: { message: "successfully deleted" }
+    else
+      render json: { error: "there seems to be an issue deleting your board" }
+    end
+  end
+
   private
+
+  def set_pin
+    @board = Board.find_by_id(params[:id])
+  end
 end
