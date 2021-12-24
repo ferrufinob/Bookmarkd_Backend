@@ -25,7 +25,7 @@ class Api::V1::BoardsController < ApplicationController
 
   private
 
-  def set_pin
+  def set_board
     @board = Board.find_by_id(params[:id])
   end
 end

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create] #signup
       post "/login", to: "sessions#login"
       get "/autologin", to: "sessions#autologin"
-      resources :boards, only: [:index, :create]
+      resources :boards, only: [:index, :create, :destroy]
       resources :pins, only: [:index, :show, :create, :destroy]
     end
   end
